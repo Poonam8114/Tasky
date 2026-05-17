@@ -3,7 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import dns from "dns"
-
+import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.route.js"
 
 dns.setServers(['1.1.1.1',
@@ -24,6 +24,8 @@ mongoose
 
 const app = express()
 
+
+
 // Middleware to handle cors
 app.use(
   cors({
@@ -35,8 +37,9 @@ app.use(
 
 // Middleware to handle JSON object in req body
 app.use(express.json())
+app.use("/api/auth", authRoutes)
 
-// app.use(cookieParser())
+ app.use(cookieParser())
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!")
