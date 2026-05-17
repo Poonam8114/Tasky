@@ -3,6 +3,9 @@ import cors from "cors"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import dns from "dns"
+
+import authRoutes from "./routes/auth.route.js"
+
 dns.setServers(['1.1.1.1',
   '8.8.8.8'
 ])
@@ -39,3 +42,4 @@ app.listen(3000, () => {
   console.log("Server is running on port 3000!")
 })
 
+app.use("/api/auth", authRoutes)
