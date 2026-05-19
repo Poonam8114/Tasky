@@ -21,4 +21,5 @@ router.put("/update-profile", verifyToken, updateUserProfile)
 
 router.post("/upload-image", upload.single("image"), uploadImage)
 
+
 export default router

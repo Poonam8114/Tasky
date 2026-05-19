@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import dns from "dns"
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/auth.route.js"
+import userRoutes from "./routes/user.route.js"
 
 dns.setServers(['1.1.1.1',
   '8.8.8.8'
@@ -42,6 +43,7 @@ app.use(express.json());
 // 3. COOKIE PARSER 👈 MUST be BEFORE routes
 app.use(cookieParser());
 app.use("/api/auth", authRoutes)
+app.use("/api/users", userRoutes)
 
 
 app.listen(3000, () => {
