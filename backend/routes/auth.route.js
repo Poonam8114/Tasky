@@ -7,7 +7,7 @@ import {
   uploadImage
 } from "../controller/auth.controller.js"
 import { verifyToken } from "../utils/verifyUser.js"
-
+import upload from "../utils/multer.js"
 
 const router = express.Router()
 
