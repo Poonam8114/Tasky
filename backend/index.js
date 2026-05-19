@@ -36,16 +36,19 @@ app.use(
 )
 
 // Middleware to handle JSON object in req body
-app.use(express.json())
+
+app.use(express.json());
+
+// 3. COOKIE PARSER 👈 MUST be BEFORE routes
+app.use(cookieParser());
 app.use("/api/auth", authRoutes)
 
- app.use(cookieParser())
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!")
 })
 
-app.use("/api/auth", authRoutes)
+
 
 
 app.use((err, req, res, next) => {
