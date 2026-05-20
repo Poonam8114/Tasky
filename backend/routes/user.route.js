@@ -7,6 +7,7 @@ const router = express.Router()
 
 // User mangement route
 router.get("/get-users", verifyToken, adminOnly, getUsers)
+//get user by id
 
 router.get("/:id", verifyToken, getUserById)
 
