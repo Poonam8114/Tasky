@@ -5,7 +5,8 @@ import {
     getTaskById,
     updateTask,
       deleteTask,
-        updateTaskStatus
+        updateTaskStatus,
+         updateTaskChecklist
   
 } from "../controller/task.controller.js"
 
@@ -19,6 +20,8 @@ router.get("/:id", verifyToken, getTaskById)
 router.put("/:id", verifyToken, updateTask)
 router.delete("/:id", verifyToken, adminOnly, deleteTask)
 router.put("/:id/status", verifyToken, updateTaskStatus)
+router.put("/:id/todo", verifyToken, updateTaskChecklist)
+
 
 
 export default router
