@@ -7,7 +7,8 @@ import {
       deleteTask,
         updateTaskStatus,
          updateTaskChecklist,
-          getDashboardData
+          getDashboardData,
+          userDashboardData
   
 } from "../controller/task.controller.js"
 
@@ -17,7 +18,7 @@ router.post("/create", verifyToken, adminOnly, createTask)
 
 router.get("/", verifyToken, getTasks)
 router.get("/dashboard-data", verifyToken, adminOnly, getDashboardData)
-
+router.get("/user-dashboard-data", verifyToken, userDashboardData)
 
 router.get("/:id", verifyToken, getTaskById)
 router.put("/:id", verifyToken, updateTask)
