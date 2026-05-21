@@ -3,7 +3,8 @@ import { adminOnly, verifyToken } from "../utils/verifyUser.js"
 import {
   createTask, getTasks,
     getTaskById,
-    updateTask
+    updateTask,
+      deleteTask
   
 } from "../controller/task.controller.js"
 
@@ -15,6 +16,7 @@ router.get("/", verifyToken, getTasks)
 
 router.get("/:id", verifyToken, getTaskById)
 router.put("/:id", verifyToken, updateTask)
+router.delete("/:id", verifyToken, adminOnly, deleteTask)
 
 
 export default router
