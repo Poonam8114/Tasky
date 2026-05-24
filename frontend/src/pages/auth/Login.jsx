@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import AuthLayout from "../../components/AuthLayout";
 import { FaPeopleRoof } from "react-icons/fa6";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
 import { validateEmail } from "../../utils/helper"
+import axiosInstance from "../../utils/axioInstance"
+//import { useDispatch, useSelector } from "react-redux"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,40 +30,30 @@ const Login = () => {
     setError(null)
 
     // Login API call
-    try {
-      dispatch(signInStart())
-
-      const response = await axiosInstance.post(
-        "/auth/sign-in",
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-
-      // console.log(response.data)
+      try {
+    const response = await axiosInstance.post(
+      "/auth/sign-in",
+      { email, password },
+      { withCredentials: true }
+    );
 
       if (response.data.role === "admin") {
-        dispatch(signInSuccess(response.data))
+       
         navigate("/admin/dashboard")
       } else {
-        dispatch(signInSuccess(response.data))
+       
         navigate("/user/dashboard")
       }
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        setError(error.response.data.message)
-        dispatch(signInFailure(error.response.data.message))
-      } else {
-        setError("Something went wrong. Please try again!")
-        dispatch(signInFailure("Something went wrong. Please try again!"))
+  } catch (error) {
+        if (error.response && error.response.data.message) {
+          setError(error.response.data.message)
+          
+        } else {
+          setError("Something went wrong. Please try again!")
+          
+        }
       }
-    }
-  }
-;
+};
 
   return (
     <AuthLayout>
