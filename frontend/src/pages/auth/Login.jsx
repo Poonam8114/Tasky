@@ -5,14 +5,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom"
 import { validateEmail } from "../../utils/helper"
 import axiosInstance from "../../utils/axioInstance"
-//import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { signInFailure, signInStart, signInSuccess } from "../../redux/slice/userSlice"
 
 const Login = () => {
+  const navigate = useNavigate()
+    const dispatch = useDispatch()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate()
+   const { loading } = useSelector((state) => state.user)
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +35,7 @@ const Login = () => {
 
     // Login API call
       try {
+        dispatch(signInStart())
     const response = await axiosInstance.post(
       "/auth/sign-in",
       { email, password },
@@ -38,6 +43,7 @@ const Login = () => {
     );
 
       if (response.data.role === "admin") {
+         dispatch(signInSuccess(response.data))
        
         navigate("/admin/dashboard")
       } else {
@@ -129,8 +135,11 @@ const Login = () => {
               </div>
  {error && <p className="text-red-500 text-sm">{error}</p>}
 
-              {/* Submit Button */}
-              <div>
+  {loading ? (
+                <span className="animate-pulse w-full text-center bg-blue-600 text-white">
+                  Loading...
+                </span>
+              ):(  <div>
                   <button
                     type="submit"
                     className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 focus:ring-offset-0 cursor-pointer"
@@ -138,7 +147,20 @@ const Login = () => {
                     LOGIN
                   </button>
                 </div>
-              
+              ) }
+ 
+
+
+              {/* Submit Button */}
+              {/* <div>
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                  >
+                    LOGIN
+                  </button>
+                </div>
+               */}
 
             </form>
 
