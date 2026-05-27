@@ -1,6 +1,6 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './pages/auth/Login'
+import React from "react"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import Login from "./pages/auth/Login"
 import SignUp from "./pages/auth/SignUp"
 import Dashboard from "./pages/admin/Dashboard"
 import ManageTasks from "./pages/admin/ManageTasks"
@@ -10,16 +10,17 @@ import PrivateRoute from "./routes/PrivateRoute"
 import UserDashboard from "./pages/user/UserDashboard"
 import TaskDetails from "./pages/user/TaskDetails"
 import MyTasks from "./pages/user/MyTasks"
+import { useSelector } from "react-redux"
+
 
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className='text-amber-300 underline'>App</div>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-
 
           {/* Admin Routes */}
           <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
@@ -29,7 +30,6 @@ const App = () => {
             <Route path="/admin/create-task" element={<CreateTask />} />
           </Route>
 
-
           {/* User Routes */}
           <Route element={<PrivateRoute allowedRoles={["user"]} />}>
             <Route path="/user/dashboard" element={<UserDashboard />} />
@@ -37,11 +37,27 @@ const App = () => {
             <Route path="/user/task-details/:id" element={<TaskDetails />} />
           </Route>
 
+          {/* Default Route */}
+          <Route path="/" element={<Root />} />
+        </Routes>
+      </BrowserRouter>
 
-
-      </Routes>
-    </BrowserRouter>
+    </div>
   )
 }
 
 export default App
+
+const Root = () => {
+  const { currentUser } = useSelector((state) => state.user)
+
+  if (!currentUser) {
+    return <Navigate to={"/login"} />
+  }
+
+  return currentUser.role === "admin" ? (
+    <Navigate to={"/admin/dashboard"} />
+  ) : (
+    <Navigate to={"/user/dashboard"} />
+  )
+}
