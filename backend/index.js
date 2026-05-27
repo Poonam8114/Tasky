@@ -8,6 +8,10 @@ import authRoutes from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
 import taskRoutes from "./routes/task.route.js"
 import reportRoutes from "./routes/report.route.js"
+import path from "path"
+//path not need to install explicitely its already intsall in node module
+import { fileURLToPath } from "url"
+
 
 dns.setServers(['1.1.1.1',
   '8.8.8.8'
@@ -15,6 +19,8 @@ dns.setServers(['1.1.1.1',
 
 
 dotenv.config()
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -54,7 +60,8 @@ app.listen(3000, () => {
 })
 
 
-
+//serve static files from the uploads directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500
