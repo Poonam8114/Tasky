@@ -153,3 +153,11 @@ export const uploadImage = async (req, res, next) => {
 }
 
 
+//signout
+export const signout = async (req, res, next) => {
+  try {
+    res.clearCookie("access_token").status(200).json("Signout successful")
+  } catch (error) {
+    next(error)
+  }   
+}

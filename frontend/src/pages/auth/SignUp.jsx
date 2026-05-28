@@ -43,6 +43,7 @@ const SignUp = () => {
     setError(null)
 
     // SignUp API call
+    //signup api added
     try {
       // Upload profile picture if present
       if (profilePic) {

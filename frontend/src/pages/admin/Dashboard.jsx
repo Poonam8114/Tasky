@@ -1,8 +1,16 @@
 import React from 'react'
-
+import { useSelector } from "react-redux"
+import DashboardLayout from "../../components/DashboardLayout"
 const Dashboard = () => {
+   const { currentUser } = useSelector((state) => state.user)
   return (
-    <div>Dashboard</div>
+   
+
+<DashboardLayout activeMenu={"Dashboard"}>dashboard</DashboardLayout>
+
+
+
+  
   )
 }
 

@@ -1,5 +1,6 @@
 import axiosInstance from "./axioInstance"
 
+
 const uploadImage = async (imageFile) => {
   const formData = new FormData()
 
@@ -20,3 +21,4 @@ const uploadImage = async (imageFile) => {
 }
 
 export default uploadImage
+//upload image api added
