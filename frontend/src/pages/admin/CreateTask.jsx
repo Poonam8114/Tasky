@@ -147,7 +147,7 @@ const CreateTask = () => {
     createTask()
   }
 
-  // get task info by id
+  // get task details by id
   const getTaskDetailsById = async () => {
     try {
       const response = await axiosInstance.get(`/tasks/${taskId}`)
