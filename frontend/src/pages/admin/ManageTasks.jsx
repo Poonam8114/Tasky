@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react"
 import DashboardLayout from "../../components/DashboardLayout"
 import { useNavigate } from "react-router-dom"
- import axiosInstance from "../../utils/axioInstance"
+import axiosInstance from "../../utils/axioInstance"
+import TaskStatusTabs from "../../components/TaskStatusTabs"
+import { FaFileLines } from "react-icons/fa6"
 
+import toast from "react-hot-toast"
 
 const ManageTasks = () => {
   const [allTasks, setAllTasks] = useState([])
-  const [tabs, setTabs] = useState("All")//loke pending completed
+  const [tabs, setTabs] = useState("All")
   const [filterStatus, setFilterStatus] = useState("All")
 
   console.log(tabs)
@@ -43,9 +46,30 @@ const ManageTasks = () => {
   const handleClick = (taskData) => {
     navigate("/admin/create-task", { state: { taskId: taskData._id } })
   }
-//to dowload repaort
+
   const handleDownloadReport = async () => {
-    
+    try {
+      const response = await axiosInstance.get("/reports/export/tasks", {
+        responseType: "blob",
+      })
+
+      // create a url for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement("a")
+
+      link.href = url
+
+      link.setAttribute("download", "tasks_details.xlsx")
+      document.body.appendChild(link)
+
+      link.click()
+
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (error) {
+      console.log("Error downloading task-details report: ", error)
+      toast.error("Error downloading task-details report. Please try again!")
+    }
   }
 
   useEffect(() => {
@@ -56,8 +80,43 @@ const ManageTasks = () => {
 
   return (
     <DashboardLayout activeMenu={"Manage Task"}>
-    <div className="my-5"></div>
-      
+      <div className="my-6 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
+          <div className="flex items-center justify-between gap-4 w-full md:w-auto ">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+              My Tasks
+            </h2>
+
+            <button
+              className="md:hidden px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 font-medium shadow-sm hover:shadow-md cursor-pointer"
+              onClick={handleDownloadReport}
+              type="button"
+            >
+              Download
+            </button>
+          </div>
+
+          {allTasks?.length > 0 && (
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+              <TaskStatusTabs
+                tabs={tabs}
+                activeTab={filterStatus}
+                setActiveTab={setFilterStatus}
+              />
+
+              <button
+                className="hidden md:flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-200 font-medium shadow-sm hover:shadow-md active:scale-95 cursor-pointer"
+                onClick={handleDownloadReport}
+                type="button"
+              >
+                <FaFileLines className="text-lg" />
+                <span>Download Report</span>
+              </button>
+            </div>
+          )}
+        </div>
+
+      </div>
     </DashboardLayout>
   )
 }
