@@ -82,7 +82,7 @@ const CreateTask = () => {
     }
   }
 
-  // update task
+  // update task to update details
   const updateTask = async () => {
     try {
       const todolist = taskData.todoChecklist?.map((item) => {
