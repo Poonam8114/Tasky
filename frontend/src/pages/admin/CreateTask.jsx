@@ -7,10 +7,12 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import SelectedUsers from "../../components/SelectedUsers"
 import TodoListInput from "../../components/TodoListInput"
-
+import AddAttachmentsInput from "../../components/AddAttachmentsInput"
+import axiosInstance from "../../utils/axioInstance"
+import moment from "moment"
+import toast from "react-hot-toast"
 import Modal from "../../components/Modal"
 import DeleteAlert from "../../components/DeleteAlert"
-import AddAttachmentsInput from "../../components/AddAttachmentsInput"
 
 const CreateTask = () => {
   const location = useLocation()
@@ -315,7 +317,7 @@ const CreateTask = () => {
                 />
               </div>
 
-               <div className="mt-3">
+              <div className="mt-3">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Add Attachments
                 </label>
@@ -326,7 +328,7 @@ const CreateTask = () => {
                     handleValueChange("attachments", value)
                   }
                 />
-              </div> 
+              </div>
 
               <div className="flex justify-end mt-7">
                 <button
@@ -355,6 +357,5 @@ const CreateTask = () => {
     </DashboardLayout>
   )
 }
-
 
 export default CreateTask
