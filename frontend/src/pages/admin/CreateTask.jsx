@@ -175,7 +175,7 @@ const CreateTask = () => {
     }
   }
 
-  // delete task
+  // delete task 
   const deleteTask = async () => {
     try {
       await axiosInstance.delete(`/tasks/${taskId}`)
