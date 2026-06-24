@@ -38,7 +38,7 @@ const app = express()
 // Middleware to handle cors
 app.use(
   cors({
-    origin: process.env.FRONT_END_URL || "http://localhost:5173",
+    origin: process.env.FRONT_END_URL || "https://tasky-seven-pi.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
