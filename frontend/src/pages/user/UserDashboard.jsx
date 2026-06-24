@@ -44,7 +44,7 @@ const UserDashboard = () => {
 
   const getDashboardData = async () => {
     try {
-      const response = await axiosInstance.get("/tasks/user-dashboard-data")
+      const response = await axiosInstance.get("api/tasks/user-dashboard-data")
 
       if (response.data) {
         setDashboardData(response.data)
