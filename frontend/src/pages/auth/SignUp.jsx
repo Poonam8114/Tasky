@@ -51,7 +51,7 @@ const SignUp = () => {
         profileImageUrl = imageUploadRes.imageUrl || ""
       }
 
-      const response = await axiosInstance.post("api/auth/sign-up", {
+      const response = await axiosInstance.post("/auth/sign-up", {
         name: fullName,
         email,
         password,

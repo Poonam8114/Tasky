@@ -18,7 +18,7 @@ const ManageTasks = () => {
 
   const getAllTasks = async () => {
     try {
-      const response = await axiosInstance.get("api/tasks", {
+      const response = await axiosInstance.get("/tasks", {
         params: {
           status: filterStatus === "All" ? "" : filterStatus,
         },

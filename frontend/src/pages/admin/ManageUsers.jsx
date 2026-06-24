@@ -10,7 +10,7 @@ const ManageUsers = () => {
 
   const getAllUsers = async () => {
     try {
-      const response = await axiosInstance.get("api/users/get-users")
+      const response = await axiosInstance.get("/users/get-users")
 
       if (response.data?.length > 0) {
         setAllUsers(response.data)

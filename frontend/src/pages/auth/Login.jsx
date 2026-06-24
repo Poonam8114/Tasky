@@ -43,7 +43,7 @@ const Login = () => {
       dispatch(signInStart())
 
       const response = await axiosInstance.post(
-        "api/auth/sign-in",
+        "/auth/sign-in",
         {
           email,
           password,
