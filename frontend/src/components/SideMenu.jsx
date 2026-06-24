@@ -25,7 +25,7 @@ const SideMenu = ({ activeMenu }) => {
 
   const handleLogut = async () => {
     try {
-      const response = await axiosInstance.post("/auth/sign-out")
+      const response = await axiosInstance.post("api/auth/sign-out")
 
       if (response.data) {
         dispatch(signOutSuccess())
