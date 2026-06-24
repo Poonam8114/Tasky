@@ -65,7 +65,7 @@ const CreateTask = () => {
         completed: false,
       }))
 
-      const response = await axiosInstance.post("/tasks/create", {
+      const response = await axiosInstance.post("api/tasks/create", {
         ...taskData,
         dueDate: new Date(taskData.dueDate).toISOString(),
         todoChecklist: todolist,
